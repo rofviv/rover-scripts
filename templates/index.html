@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar LiDAR</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Estilo para ajustar el tamaño del canvas */
+        #lidarRadar {
+            width: 600px;   /* Ancho del canvas */
+            height: 00px;  /* Altura del canvas */
+            max-width: 100%; /* Para que se ajuste responsivamente */
+            margin: 0 auto; /* Centrar el canvas */
+            display: block; /* Asegurar que el canvas sea un bloque centrado */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        div {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Radar LiDAR</h1>
+
+    <!-- Mostrar datos del sensor -->
+    <div>
+        <p><strong>Estado del Sensor:</strong> <span id="sensor-mode">Cargando...</span></p>
+        <p><strong>Objeto Detectado:</strong> <span id="object-detected">Cargando...</span></p>
+    </div>
+
+    <!-- Canvas para el radar -->
+    <canvas id="lidarRadar"></canvas>
+
+    <script>
+        // Función para obtener datos del LiDAR
+        async function fetchLidarData() {
+            const response = await fetch('/lidar-data');
+            return await response.json();
+        }
+
+        // Función para obtener el estado de las variables
+        async function fetchVariables() {
+            const response = await fetch('/variables');
+            return await response.json();
+        }
+
+        // Actualizar el radar con los datos del LiDAR
+        function updateRadarChart(chart, data) {
+            const distances = data.map(point => point.distance);
+            const angles = data.map(point => point.angle);
+            const colors = data.map(point => point.color === 'red' ? 'rgba(255, 99, 132, 0.5)' : 'rgba(75, 192, 192, 0.5)');
+
+            chart.data.datasets[0].data = data.map(point => ({
+                r: point.distance,
+                theta: point.angle
+            }));
+
+            // Actualizar los colores de los puntos en función de la detección del objeto
+            chart.data.datasets[0].backgroundColor = colors;
+            chart.update();
+        }
+
+        // Actualizar el radar y los datos del LiDAR cada segundo
+        async function updateLidarData(chart) {
+            const data = await fetchLidarData();
+            updateRadarChart(chart, data);
+        }
+
+        // Actualizar el estado de las variables en la interfaz
+        async function updateVariables() {
+            const variables = await fetchVariables();
+
+            // Mostrar si el sensor está activo o no
+            const sensorModeText = variables.sensor_mode === 1 ? 'Activo' : 'No Activo';
+            document.getElementById('sensor-mode').innerText = sensorModeText;
+
+            // Mostrar si se ha detectado un objeto o no
+            const objectDetectedText = variables.object_detected ? 'Sí' : 'No';
+            document.getElementById('object-detected').innerText = objectDetectedText;
+        }
+
+        // Al cargar la página
+        window.onload = function () {
+            const ctx = document.getElementById('lidarRadar').getContext('2d');
+            const radarChart = new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            suggestedMin: 0,
+                            suggestedMax: 3000
+                        }
+                    }
+                }
+            });
+
+            // Actualizar datos cada segundo
+            setInterval(() => {
+                updateLidarData(radarChart);
+                updateVariables();  // Actualizar el estado de las variables
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

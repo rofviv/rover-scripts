@@ -1,0 +1,28 @@
+-- Script Lua para cambiar a modo "hold" en caso de desconexión
+local function main()
+    local connection_lost = false  -- Bandera para verificar la conexión
+    local check_interval = 5  -- Intervalo para verificar la conexión en segundos
+
+    while true do
+        local heartbeat = mav:heartbeat()
+	print("Heartbeat checking....")
+        if heartbeat then
+            if connection_lost then
+                print("Conexión restaurada con el Cube.")
+                connection_lost = false  -- Restablece la bandera de conexión
+            end
+        else
+            if not connection_lost then
+                print("Desconectado del Cube. Cambiando a modo 'hold'.")
+                mav:set_mode("HOLD")
+                connection_lost = true  -- Establecer bandera de desconexión
+            end
+        end
+
+        -- Espera antes de volver a comprobar la conexión
+        sleep(check_interval)
+    end
+end
+
+-- Ejecuta el script
+main()
