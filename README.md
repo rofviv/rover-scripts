@@ -48,4 +48,4 @@ Instalar Wireguard
 Instalar Mavproxy
 Instalar Python
 Instalar VSC
-Instalar Drivers Lidar
+Instalar Drivers Lidar https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads
