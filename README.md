@@ -41,3 +41,11 @@
 ##### Configurar WIFI. conectar automaticamente
 ssid: OMEN-PC
 pass: Pass123!
+
+Instalar Anydesk 
+Instalar OBS
+Instalar Wireguard
+Instalar Mavproxy
+Instalar Python
+Instalar VSC
+Instalar Drivers Lidar
