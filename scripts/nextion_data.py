@@ -3,6 +3,8 @@ import pyvisa as visa
 import time
 import requests
 
+print("SCRIPT NEXTION DATA")
+
 project_root = os.getenv('PROJECT_ROOT', '')
 base_url_patio_env = os.getenv('BASE_URL_PATIO', 'https://www.patio-driver.patiodelivery2.com')
 token_patio_env = os.getenv('TOKEN_PATIO', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQsInVzZXJuYW1lIjoic2NAdGVzdC5jb20iLCJpYXQiOjE3MjE3NjY5NjgsImV4cCI6MTc1MzMwMjk2OH0.UrIetzHOSBcTlMdeOD_TRyj4eLIHMdzx-SxZXSfwQM4')

@@ -4,6 +4,8 @@ import subprocess
 import time
 import threading
 
+print("SCRIPT SERVER SENSORS MAVPROXY")
+
 TIEMPO_MAX_ESPERA = 2
 session_name = os.getenv('SESSION_NAME', "mavproxy_session")
 ip_remote_mavproxy = os.getenv('IP_REMOTE_MAVPROXY', '192.168.18.20')

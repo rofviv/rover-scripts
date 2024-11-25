@@ -4,8 +4,10 @@ import time
 import socket
 import threading
 
+print("SCRIPT LIDAR")
+
 project_root = os.getenv('PROJECT_ROOT', '')
-port_com_lidar = "COM8"
+port_com_lidar = "COM5"
 lidar = RPLidar(port_com_lidar, 256000)
 
 MAX_DISTANCE = 500

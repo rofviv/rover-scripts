@@ -28,9 +28,9 @@ if errorlevel 1 (
     rem Abre la URL de Google Meet en el navegador predeterminado
     rem start "" %MEET_LINK%
 
-    rem timeout /t 5
+    timeout /t 5
     rem Abrir app rover
-    rem start "" "%PROJECT_ROOT%\rover-app\rover_relay.exe"
+    start "" "%PROJECT_ROOT%\rover-app\rover_relay.exe"
     
     rem timeout /t 5
     rem Iniciar MAVProxy
@@ -40,15 +40,23 @@ if errorlevel 1 (
     rem Iniciar MAVProxy
     start "" "%PROJECT_ROOT%\scripts\start_wsl.bat"
 
-    rem timeout /t 10
-    rem Iniciar ping to ip
-    rem start "" %PYTHON_PATH% "%PROJECT_ROOT%\scripts\lidar_sensor.py"
+    timeout /t 10
+    rem Iniciar server
+    start "" %PYTHON_PATH% "%PROJECT_ROOT%\commands\main.py"
+
+    timeout /t 10
+    rem Iniciar Lidar
+    start "" %PYTHON_PATH% "%PROJECT_ROOT%\commands\lidar_client.py"
 
     rem timeout /t 10
-    rem Iniciar ping to ip
-    rem start "" %PYTHON_PATH% "%PROJECT_ROOT%\scripts\latency.py"
+    rem Iniciar Sonar
+    rem start "" %PYTHON_PATH% "%PROJECT_ROOT%\commands\sonar_client.py"
 
-    rem timeout /t 5
+    timeout /t 10
+    rem Iniciar ping to ip
+    start "" %PYTHON_PATH% "%PROJECT_ROOT%\scripts\latency.py"
+
+    rem timeout /t 10
     rem Iniciar nextion display
     rem start "" %PYTHON_PATH% "%PROJECT_ROOT%\scripts\nextion_data.py"
 )
