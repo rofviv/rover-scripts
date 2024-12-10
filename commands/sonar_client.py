@@ -11,6 +11,7 @@ arduino = serial.Serial(port='COM10', baudrate=9600, timeout=1)
 arduino.reset_input_buffer()
 
 MAX_DISTANCE = 20
+MAX_DISTANCE_BACK = 80
 sensor_mode = 1
 sensor_back = 0
 
@@ -39,12 +40,12 @@ def monitor_mode_changes():
     global sensor_mode
     while True:
         read_sensor_mode()
-        # read_back()
+        read_back()
         time.sleep(5)
 
 
-def manejar_sensor(sensor, distancia):
-    if distancia < MAX_DISTANCE:
+def manejar_sensor(sensor, distancia, max_distance):
+    if distancia < max_distance:
         notificar_maestro(f"sonar-{sensor}")
         print(f"Sensor sonar-{sensor} detecta objeto a {distancia} cm")
 
@@ -67,12 +68,12 @@ def leer_sensor():
                         current_time = datetime.now().strftime('%H:%M:%S')
                         print(f"{current_time} - {linea}")
 
-                        manejar_sensor(sensor, distancia)
-                        # if sensor == 4:
-                        #     if sensor_back == 1:
-                        #         manejar_sensor(sensor, distancia)
-                        # else:
-                        #     manejar_sensor(sensor, distancia)
+                        # manejar_sensor(sensor, distancia, MAX_DISTANCE)
+                        if sensor_back == 1:
+                            if sensor == 4:
+                                manejar_sensor(sensor, distancia, MAX_DISTANCE_BACK)
+                        elif sensor != 4:
+                            manejar_sensor(sensor, distancia, MAX_DISTANCE)
                 except (IndexError, ValueError):
                     print("Error al procesar los datos del sensor")
 
