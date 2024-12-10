@@ -1,0 +1,15 @@
+If you are on a 32-bit system, replace "deviceinstaller64" with "deviceinstaller"
+
+cd C:\DIRECTORY\OF\EXTRACTED\FOLDER
+deviceinstaller64 install usbmmidd.inf usbmmidd
+
+-Add virtual display:
+deviceinstaller64 enableidd 1
+
+-Remove virtual display:
+deviceinstaller64 enableidd 0
+
+
+-Uninstall:
+deviceinstaller64 stop usbmmidd
+deviceinstaller64 remove usbmmidd

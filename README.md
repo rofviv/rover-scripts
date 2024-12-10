@@ -49,3 +49,16 @@ Instalar Mavproxy
 Instalar Python
 Instalar VSC
 Instalar Drivers Lidar https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads
+
+Instalar Monitor Virtual
+Copiar los archivos de la carpeta virtualscreen y seguir las instrucciones de la carpeta o descargar los archivos https://drive.google.com/file/d/1VndaCfKdjMO-sN7q8qDPPM_65Pw7StX5/view
+Crear acceso directo a monitor_virtual.bat y pegarlo en el inicio del sistema (shell:startup)
+Configurar permisos de administrador para el acceso directo
+- Clic derecho sobre el monitor_virtual acceso directo.bat -> properties -> shortcut -> advanced -> check Run as administrator
+
+Modificar modificar las políticas del UAC
+- Win + R y escribe: secpol.msc
+- Local Policies -> Security Options -> User Account Control -> Run all administrators in Admin Approval Mode -> Disabled
+
+
+
